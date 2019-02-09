@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+  selector: 'services-grid-data',
+  templateUrl: './servicesgrid.component.html'
 })
 
 
-export class FetchDataComponent
+export class ServicesGridComponent
 {
   public forecasts: WeatherForecast[];
   public report: string;

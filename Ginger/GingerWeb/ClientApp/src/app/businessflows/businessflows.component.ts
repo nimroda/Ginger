@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './businessflow.component.html'
+  selector: 'business-flows-data',
+  templateUrl: './businessflows.component.html'
 })
 
 
-export class businessflowComponent
+export class BusinessFlowsComponent
 {
   public businessflows: BusinessFlow[];
   public report: string;

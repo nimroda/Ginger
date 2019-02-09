@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-fetch-data',
+  selector: 'runsets',
   templateUrl: './fetch-data.component.html'
 })
 
