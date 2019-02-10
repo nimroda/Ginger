@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { SolutionComponent } from './solution/solution.component';
 import { BusinessFlowsComponent } from './businessflows/businessflows.component';
 import { ServicesGridComponent } from './servicesgrid/servicesgrid.component';
+import { RunSetComponent } from './runset/runset.component';
 
 
 @NgModule({
@@ -19,9 +20,10 @@ import { ServicesGridComponent } from './servicesgrid/servicesgrid.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
+    SolutionComponent,
     BusinessFlowsComponent,
-    ServicesGridComponent
+    ServicesGridComponent,
+    RunSetComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,9 +32,10 @@ import { ServicesGridComponent } from './servicesgrid/servicesgrid.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'solution', component: SolutionComponent },
       { path: 'businessflows', component: BusinessFlowsComponent },
       { path: 'servicesgrid', component: ServicesGridComponent },
+      { path: 'runset', component: RunSetComponent },
     ])
   ],
   providers: [],

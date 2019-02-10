@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+  selector: 'runset',
+  templateUrl: './runset.component.html'
 })
 
 
-export class FetchDataComponent
+export class RunSetComponent
 {
-  public forecasts: WeatherForecast[];
+  public runsets: RunSet[];
   public report: string;
   mHttp: HttpClient;
   mBaseUrl: string;
@@ -21,17 +21,17 @@ export class FetchDataComponent
     this.mHttp = http;
     this.mBaseUrl = baseUrl;
 
-    http.get<WeatherForecast[]>(baseUrl + 'api/BusinessFlow/BusinessFlows').subscribe(result => {
-      this.forecasts = result;
+    http.get<RunSet[]>(baseUrl + 'api/RunSet/RunSets').subscribe(result => {
+      this.runsets = result;
     }, error => console.error(error));
 
   }
 
-  public runFlow(BF:WeatherForecast) {
+  public run(BF:RunSet) {
 
     BF.status = "Running";
     BF.elapsed = -1;
-    const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/BusinessFlow/RunBusinessFlow', {
+    const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/RunSet/RunRunSet', {
       name: BF.name  //TODO: We send the BF name replace with BF.Guid
     })
       .subscribe(
@@ -43,12 +43,12 @@ export class FetchDataComponent
       },
         err => {
           console.log("Error occured");
-          BF.status = "Error 123";
+          BF.status = "Error !!!";
         }
       );
   }
 
-  public flowReport(BF: WeatherForecast) {
+  public flowReport(BF: RunSet) {
     
   }
 
@@ -64,7 +64,7 @@ interface RunBusinessFlowResult {
   report: string;
 }
 
-interface WeatherForecast {
+interface RunSet {
   name: string;
   description: string;
   fileName: string;
