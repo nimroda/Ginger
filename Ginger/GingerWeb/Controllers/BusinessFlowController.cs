@@ -1,5 +1,3 @@
-using Amdocs.Ginger.Common;
-using Amdocs.Ginger.CoreNET.Run.RunListenerLib;
 using Ginger.Reports;
 using Ginger.Run;
 using GingerCore;
@@ -90,6 +88,8 @@ namespace GingerWeb.Controllers
 
 
         string jsonDumpFolder = @"c:\temp\Ginger\Dump\";  // !!!!!!!!!!!!!!!!!!!temp FIXME
+        
+
         void GenerateReport(BusinessFlow businessFlow)    // temp remove BF from param
         {
 
@@ -98,15 +98,16 @@ namespace GingerWeb.Controllers
             //Ginger.Reports.GingerExecutionReport.ExtensionMethods.CreateGingerExecutionReport(RI);
 
             string templatesFolder = @"C:\Users\yaronwe\source\repos\Ginger\Ginger\Ginger\Reports\GingerExecutionReport\"; // !!!!!!!!!!!!!!!!!!!!!!! temp fix me
-            HTMLReportConfiguration selectedHTMLReportConfiguration = HTMLReportConfiguration.SetHTMLReportConfigurationWithDefaultValues("DefaultTemplate", true);
-
-            HTMLReportsConfiguration hTMLReportsConfiguration = new HTMLReportsConfiguration();
+            
 
             string hTMLOutputFolder = @"C:\Temp\Ginger\Report"; // !!!!!!!!!!!!!!!!!!!!!!! temp fix me
             Directory.Delete(hTMLOutputFolder,true);
             Directory.CreateDirectory(hTMLOutputFolder);
+            
 
-            string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, true, selectedHTMLReportConfiguration, templatesFolder: templatesFolder, hTMLReportsConfiguration: hTMLReportsConfiguration, hTMLOutputFolder: hTMLOutputFolder);
+            //HTMLReportConfiguration config = new HTMLReportConfiguration();
+            HTMLReportConfiguration config = HTMLReportConfiguration.SetHTMLReportConfigurationWithDefaultValues("DefaultTemplate", true);
+            string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, config, templatesFolder, hTMLOutputFolder);
 
 
 
