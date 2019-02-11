@@ -19,6 +19,7 @@ limitations under the License.
 using amdocs.ginger.GingerCoreNET;
 using Amdocs.Ginger.Common;
 using Amdocs.Ginger.Common.Actions;
+using Amdocs.Ginger.Common.Expressions;
 using Amdocs.Ginger.Common.InterfacesLib;
 using Amdocs.Ginger.Common.Repository;
 using Amdocs.Ginger.Common.Repository.TargetLib;
@@ -39,6 +40,7 @@ using GingerCore.GeneralLib;
 using GingerCore.Platforms;
 using GingerCore.Variables;
 using GingerCoreNET.Drivers.CommunicationProtocol;
+using GingerCoreNET.RosLynLib;
 using GingerCoreNET.RunLib;
 using GingerCoreNET.SolutionRepositoryLib.RepositoryObjectsLib.PlatformsLib;
 using GingerWPF.GeneralLib;
@@ -2650,6 +2652,71 @@ namespace Ginger.Run
         }
 
         public static void CalculateARCStatus(ActReturnValue ARC)
+        {
+
+            if (ARC.Operator == eOperator.Legacy)
+            {
+                CalculateARCStatusLegacy(ARC);
+            }
+            else
+            {
+                bool? status=null;
+
+
+                string Expression = string.Empty;
+
+                switch (ARC.Operator)
+                {
+
+                    case eOperator.Contains:
+                        status = ARC.Actual.Contains(ARC.ExpectedCalculated);
+                        break;
+                    case eOperator.DoesNotContains:
+                        status = ARC.Actual.Contains(ARC.ExpectedCalculated);
+                        break;
+                    case eOperator.Equals:
+                        status = string.Equals(ARC.Actual,ARC.ExpectedCalculated);
+                        break;
+                    case eOperator.Evaluate:
+                        Expression = ARC.ExpectedCalculated;
+                        break;
+                    case eOperator.GreaterThan:
+                        Expression = ARC.Actual + ">" + ARC.ExpectedCalculated;
+                        break;
+                    case eOperator.GreaterThanEquals:
+                        Expression = ARC.Actual + ">=" + ARC.ExpectedCalculated;
+                        break;
+                    case eOperator.LessThan:
+                        Expression = ARC.Actual + "<" + ARC.ExpectedCalculated;
+                        break;
+                    case eOperator.LessThanEquals:
+                        Expression = ARC.Actual + "<=" + ARC.ExpectedCalculated;
+                        break;
+                    case eOperator.NotEquals:
+                        Expression = ARC.Actual + "!=" + ARC.ExpectedCalculated;
+
+                        break;
+
+                }
+                if (status==null)
+                {
+
+                    status = CodeProcessor.EvalCondition(Expression);
+                }
+
+
+                    if (status.Value)
+                    {
+                        ARC.Status = ActReturnValue.eStatus.Passed;
+                    }
+                    else
+                    {
+                        ARC.Status = ActReturnValue.eStatus.Failed;
+                    }
+                
+            }
+        }
+            public static void CalculateARCStatusLegacy(ActReturnValue ARC)
         {
             //TODO: Check Expected null or empty return with no change
             

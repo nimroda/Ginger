@@ -46,6 +46,8 @@ using System.IO;
 using System.Dynamic;
 using Newtonsoft.Json.Linq;
 using Amdocs.Ginger.Common.InterfacesLib;
+using System.Linq;
+using Amdocs.Ginger.CoreNET.RosLynLib.Refrences;
 
 namespace Ginger
 {
@@ -55,6 +57,7 @@ namespace Ginger
     public partial class ValueExpressionEditorPage : Page
     {        
         ValueExpression mVE = new ValueExpression(App.AutomateTabEnvironment, App.BusinessFlow,WorkSpace.Instance.SolutionRepository.GetAllRepositoryItems<DataSourceBase>(),false,"",false);
+        VERefrenceList Tvel = new VERefrenceList();
         GenericWindow mWin;
         object mObj;
         string mAttrName;
@@ -62,7 +65,7 @@ namespace Ginger
         static List<HighlightingRule> mHighlightingRules = null;
 
         bool mHideBusinessFlowAndActivityVariables= false;
-
+        private Dictionary<string, TreeViewItem> Categories = new Dictionary<string, TreeViewItem>();
         public ValueExpressionEditorPage(object obj, string AttrName, bool hideBusinessFlowAndActivityVariables = false)
         {
             InitializeComponent();
@@ -132,9 +135,10 @@ namespace Ginger
             AddVariables();
             AddEnvParams();
             AddGlobalParameters();
-            AddVBSFunctions();
-            AddRegexFunctions();
-            AddVBSIfFunctions();
+            AddRosylynFunctions();
+           //AddVBSFunctions();
+            //AddRegexFunctions();
+            //AddVBSIfFunctions();
             AddDataSources();
             AddSecurityConfiguration();
 
@@ -150,7 +154,11 @@ namespace Ginger
                     AddFlowControlConditions();
                 }                
             }
+
+
         }
+
+    
 
         private void AddGlobalParameters()
         {
@@ -208,6 +216,34 @@ namespace Ginger
             AddVBSIfEval(tviVars, "Actual SubString from char in position 2 length 3 is 'ABC'", "Mid({Actual},2,3)=\"ABC\"");
             AddVBSIfEval(tviVars, "Actual to Upper Case = 'ABC'", "UCase({Actual})=\"ABC\"");
         }
+
+        private void AddRosylynFunctions()
+        {
+            WorkSpace.VERefrences = VERefrenceList.LoadFromJson(Path.Combine(new string[] { Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RosLynLib", "ValueExpressionRefrences.json" }));
+
+
+            foreach (ValueExpressionReference VER in WorkSpace.VERefrences.Refrences)
+            {
+                TreeViewItem Parent;
+                if (!Categories.TryGetValue(VER.Category, out Parent))
+                {
+                    Parent = new TreeViewItem();
+                    SetItemView(Parent, VER.Category, "",VER.IconImageName==null? "@Config3_16x16.png":VER.IconImageName);
+                    xObjectsTreeView.Items.Add(Parent);
+                    Categories.Add(VER.Category, Parent);
+                }
+
+                TreeViewItem tvi = new TreeViewItem();
+
+                SetItemView(tvi, VER.Name, VER.Expression, VER.IconImageName == null ? "@Config3_16x16.png" : VER.IconImageName);
+                Parent.Items.Add(tvi);
+                tvi.MouseDoubleClick += tvi_MouseDoubleClick;
+
+            }
+
+
+        }
+   
 
         private void AddVBSFunctions()
         {
@@ -292,7 +328,8 @@ namespace Ginger
             SetItemView(tvi, Desc, VarExpression, "@Regex16x16.png");
             tviVars.Items.Add(tvi);
             tvi.MouseDoubleClick += tvi_MouseDoubleClick;
-        }
+            Tvel.Refrences.Add(new ValueExpressionReference() { Category = "Regular Expressions", Name = Desc, Expression = Eval,IconImageName= "@Regex16x16.png"});
+            }
 
         private void AddVBSEval(TreeViewItem tviVars, string Desc, string Eval)
         {
@@ -300,7 +337,8 @@ namespace Ginger
             string VarExpression = "{VBS Eval=" + Eval + "}";
             SetItemView(tvi, Desc, VarExpression, "VBS16x16.png");
             tviVars.Items.Add(tvi);
-            tvi.MouseDoubleClick += tvi_MouseDoubleClick;                        
+            tvi.MouseDoubleClick += tvi_MouseDoubleClick;
+            Tvel.Refrences.Add(new ValueExpressionReference() { Category = "Date Time Functions", Name = Desc, Expression = Eval });
         }
 
         private void AddWSSecurityConfig(TreeViewItem tviSecSets, string Desc, string Eval)
@@ -310,6 +348,7 @@ namespace Ginger
             SetItemView(tviSecuritySettings, Desc, VarExpression, "@Config_16x16.png");
             tviSecSets.Items.Add(tviSecuritySettings);
             tviSecuritySettings.MouseDoubleClick += tvi_MouseDoubleClick;
+        
         }
 
         private void AddVBSIfEval(TreeViewItem tviVars, string Desc, string Eval)
@@ -319,6 +358,8 @@ namespace Ginger
             SetItemView(tvi, Desc, VarExpression, "VBS16x16.png");
             tviVars.Items.Add(tvi);
             tvi.MouseDoubleClick += tvi_MouseDoubleClick;
+
+            Tvel.Refrences.Add(new ValueExpressionReference() {Category="Date Time Functions",Name=Desc,Expression=Eval });
         }
 
         private void AddEnvParams()
@@ -588,7 +629,9 @@ namespace Ginger
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             mVE.Value = this.ValueUCTextEditor.textEditor.Text;
-            ValueCalculatedTextBox.Text = mVE.ValueCalculated;            
+            ValueCalculatedTextBox.Text = mVE.ValueCalculated;
+
+            Tvel.SavetoJson(@"C:\Users\mohdkhan\Desktop\ValueExpressionRefrences.json");
         }
                 
         private void OKButton_Click(object sender, RoutedEventArgs e)
