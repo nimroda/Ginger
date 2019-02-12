@@ -1,0 +1,310 @@
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Ginger Execution Report</title>
+    <meta name="description" content="Static &amp; Dynamic Tables" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <style>@font-face {font-family:Source Sans Pro;src: url('./assets/fonts/SourceSansPro-Regular.ttf');}</style><link rel='stylesheet' href='./assets/css/bootstrap.css' /><link rel = 'stylesheet' href ='./assets/css/styles.css' /> <link rel='stylesheet' href='./assets/css/font-awesome.css' />
+    <style type="text/css">
+        
+    </style>
+    <script src='./assets/js/jquery.js'></script><script src='./assets/js/bootstrap.js'></script><script src='./assets/js/babel.js'></script><script src='./assets/js/react-with-addons.min.js'></script><script src='./assets/js/react-dom.min.js'></script><script src='./assets/js/prop-types.min.js'></script><script src='./assets/js/Recharts.min.js'></script>
+    <script type="text/jsx">
+        function CreateChart(inputData, id, ChartTitle, Total, Percent) {
+
+    const { PieChart, Pie, Legend, Sector, Cell } = Recharts;
+    function Getcolor(props) {
+        if (props.name == "Passed")
+            return '#54A81B';
+        else if (props.name == "Failed")
+            return '#E31123';
+        else if (props.name == "Stopped")
+            return '#ED5588';
+        else if (props.name == "Other")
+            return '#A21025';
+        else if (props.name == "NA")
+            return '#e3dfdb';
+    }
+    if (Total == 0) {
+        inputData = [{ name: 'NA', value: 100 }];
+    }
+    const DonutChart = React.createClass({
+        render() {
+            return (
+                <PieChart width={140} height={140}>
+                    <circle cx={70} cy={55} r={30} fill="#e3dfdb" stroke="none" />
+                    <text x={70} y={55} textAnchor="middle" dominantBaseline="middle" fill="#1B3651" fontWeight="Bold">{Percent}%</text>
+                    <text x={70} y={130} textAnchor="middle" dominantBaseline="middle" fill="#1B3651" fontSize="15" fontWeight="Bold">{ChartTitle}({Total})</text>
+                    <Pie data={inputData}
+                        cx={65}
+                        cy={50}
+                        labelLine={false}
+                        innerRadius={40}
+                        outerRadius={50}
+                        fill="#e3dfdb"
+                        textAnchor='end'>
+                        {
+                            inputData.map((entry, index) => <Cell fill={Getcolor(inputData[index])} />)
+                        }
+                    </Pie>
+                </PieChart>
+            );
+        }
+    })
+
+    ReactDOM.render(
+        <DonutChart />,
+        document.getElementById(id)
+    );
+
+}
+    </script>   
+</head>
+<body class="no-skin">
+    <div style="background-color:#EBEFF2">
+        <div style="height:50px;background-color:#AAD0EE">
+        </div>        
+        <div id="navbar" class="navbar navbar-default">
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <img alt='Embedded Image' width='274px' height='74px' src='./assets/img/@BeatLogo.png' style='padding-left:70px'/>
+                </div>
+                <div style="float:left;display:block;width:40%">
+                    <img alt='Embedded Image' width='274px' height='74px' src='./assets/img/@Ginger.png' style='float:right;padding-left:70px'/>
+                </div>
+                <div class="navbar-buttons navbar-header pull-right" style="margin-right:80px;">                  
+                    <img alt='Embedded Image' width='203' height='75' src='./assets/img/CustomerLogo.png' />
+                </div>
+            </div>
+        </div>
+        <div class="main-container" id="main-container">
+            <div class="main-content">
+                <div class="main-content-inner">                    
+                    <div class="breadcrumbs" id="breadcrumbs">
+                    </div>
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h1 class="clss1" id="breadcum">
+                                <a href=".\..\..\GingerExecutionReport.html"></a>
+                                <small>
+                                    
+                                    <a href=".\..\GingerRunnerReport.html"></a>
+                                    
+                                    <a href=".\BusinessFlowReport.html">SCM - Create Customer 1</a>                                    
+                                </small>
+                            </h1>	                           
+                            <h1 id="clsh1">
+                                Ginger Execution Report
+                            </h1>
+                            <table style="width:100%">
+                                <tr>
+                                    <td align="left">
+                                        <span class="clsb1" id="b1"> Business Flow Execution Details - 'SCM - Create Customer 1' </span>
+                                    </td>
+                                    <td align="right">
+                                        <div style="margin-right:5px">
+                                            <!--Prev_BusinessFlowLink_Start--><!--Prev_BusinessFlowLink_End-->
+                                            <!--Next_BusinessFlowLink_Start--><!--Next_BusinessFlowLink_End-->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>                        
+                    </div>                    
+                    <div class="page-content" style="margin-top:0 auto">
+                        <div class="row">
+                            <div class="col-xs-12">                          
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseBusinessFlow">
+                                                <i class="ace-icon fa fa-angle-down bigger202" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                <h4 class="orangetxt"> Business Flow General Details </h4>
+                                            </a>
+                                        </div>
+                                        <div class="collapse in tableScroll" id="collapseBusinessFlow">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Execution Sequence</td><td>Business Flow Name</td><td>Business Flow Description</td><td>Business Flow Run Description</td><td>Environment Used</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed</td><td>Business Flow Execution Status</td><td>Number Of Activities</td><td>Business Flow Activities Passed Rate</td>                                                    
+                                                    </tr>
+                                                </thead>
+                                                <tbody >
+                                                    <tr>                                                        
+                                                        <td>1</td><td>SCM - Create Customer 1</td><td>Using hard coded value as it was recorded</td><td> N/A </td><td>CMI IIS test server - DEV</td><td>1/19/2019 4:29:18 PM</td><td>1/19/2019 4:30:11 PM</td><td>00:00:52 </td><td><label class='StatusPassed'>Passed</label></td><td>4</td><td>100 %</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <!--Section_PlaceHolder_SolutionVariablesDetails-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--InputValues-->
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12">                          
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class='panel-heading'><a class='accordion-toggle' data-toggle=collapse in href =#BusinessFlowVariablesDetails> <i class='ace-icon fa fa-angle-down bigger202' data-icon-hide='ace-icon fa fa-angle-down' data-icon-show='ace-icon fa fa-angle-right'></i><h4 class='orangetxt'>Business Flow Variables Details</h4></a></div><div class='collapse in tableScroll' id=BusinessFlowVariablesDetails><table class='table table-striped table-bordered table-hover' summary='Business Flow Variables Details'><thead><tr><th>Name</th><th>Description</th><th>Value on Execution Start</th><th>Value on Execution End</th></tr></thead><tbody><tr><td>UserName</td><td>Variable String</td><td>Moshe</td><td>Moshe</td></tr><tr><td>UserPassword</td><td>Variable String</td><td>TopSecret!</td><td>TopSecret!</td></tr><tr><td>URL</td><td>Variable String</td><td>aaaaaa</td><td>aaaaaa</td></tr></tbody></table></div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>    
+                    <!--InputValues-->
+                    
+                    <!--Business Flow Control-->
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12">                                
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <!--Business Flow Control-->
+
+                    <!--ActivitiesDetails_Start-->
+                    <div class="page-content" style="margin-top:0 auto">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseActivities">
+                                                <i class="ace-icon fa fa-angle-down bigger202" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+                                                <h4 class="orangetxt"> Business Flow Activities Execution Details </h4>
+                                            </a>
+                                        </div>
+                                        <div class="collapse in" id="collapseActivities">
+                                            <div class="row">
+                                                <div class="percentSpace" style="position:relative;left:30%;width:70%">
+                                                    <div class="col-xs-6">
+                                                        <div style='height: 150px; float:left' id="passContainer">
+                                                            
+                                                            <script type="text/jsx"
+                                                                    data-presets="es2017,react,stage-0"
+                                                                    data-plugins="transform-decorators-legacy">
+
+                                                                const PassStat = [{name: 'Passed', value: 100}
+                                                                ]
+                                                                CreateChart(PassStat, 'passContainer', 'Passed', 4, 100 );
+                                                            </script>
+                                                        </div>
+                                                        <div style='height: 150px; float:left' id="failContainer">                                                           
+                                                            <script type="text/jsx"
+                                                                    data-presets="es2017,react,stage-0"
+                                                                    data-plugins="transform-decorators-legacy">
+
+                                                                const failStat = [{name: 'Failed', value: 0}
+                                                                ]
+                                                                CreateChart(failStat, 'failContainer', 'Failed', 0,  0 );
+                                                            </script>
+                                                        </div>
+                                                        <div style='height: 150px; float:left' id="stoppedContainer">                                                           
+                                                            <script type="text/jsx"
+                                                                    data-presets="es2017,react,stage-0"
+                                                                    data-plugins="transform-decorators-legacy">
+
+                                                                const StopStat = [{name: 'Stopped', value: 0}
+                                                                ]
+                                                                CreateChart(StopStat, 'stoppedContainer', 'Stopped', 0, 0 );
+                                                            </script>
+                                                        </div>
+                                                        <div style='height: 150px; float:left' id="otherContainer">                                                            
+                                                            <script type="text/jsx"
+                                                                    data-presets="es2017,react,stage-0"
+                                                                    data-plugins="transform-decorators-legacy">
+
+                                                                const otherStat = [{name: 'Other', value: 0}
+                                                                ]
+                                                                CreateChart(otherStat, 'otherContainer', 'Other', 0, 0 );
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tableScroll">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Execution Sequence</td><td>Activity Group Name</td><td>Activity Name</td><td>Description</td><td>Run Description</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed</td><td>Execution Status</td><td>Number Of Actions</td><td>Actions Pass Rate</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr><td><a class='accordion-toggle' data-toggle='collapse' href='#Activity1Collapse'><i class='ace-icon fa fa-angle-right bigger202' data-icon-hide='ace-icon fa fa-angle-down' data-icon-show='ace-icon fa fa-angle-right' style='padding:0px 5px 0px 0px;font-size:25px;color:coral'></i></a>1</td><td> N/A </td><td><a href='.\1 Goto SCM URL\ActivityReport.html'>Goto SCM URL</a></td><td> N/A </td><td> N/A </td><td>1/19/2019 4:29:18 PM</td><td>1/19/2019 4:29:48 PM</td><td>00:00:21 </td><td><label class='StatusPassed'>Passed</label></td><td>1</td><td>100 %</td></tr><tr id='Activity1Collapse' class='collapse'><td colspan='10' style='padding-left:40px'><table class='table table-striped table-bordered table-hover'><thead class='table-space'><tr><td>Execution Sequence</td><td>Description</td><td>Run Description</td><td>Action Type</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed (Seconds)</td><td>Current Retry Iteration</td><td>Execution Status</td><td>Error Details</td><td>Extra Details</td><td>Screenshot</td></tr></thead><tr><td>1</td><td><a href='.\1 Goto SCM URL\1 Goto App URL - httpcmitechin\ActionReport.html'>Goto App URL - http://cmitechint1srv:8099/</a></td><td> N/A </td><td>Goto URL</td><td>1/19/2019 4:29:27 PM</td><td>1/19/2019 4:29:27 PM</td><td>21.171</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:29:48 AM - </td><td align='center'><img style='display:block;' src='.\1 Goto SCM URL\1 Goto App URL - httpcmitechin\Screenshots\ScreenShot_1_1.png' alt='Goto App URL - http://cmitechint1srv:8099/ - Action - Screenshot' width='250' height='136' id='ScreenShot_Goto App URL - httpcmitechint11_1' onclick='show_modal("ScreenShot_Goto App URL - httpcmitechint11_1")'></img></td></tr></table></td></tr><tr><td><a class='accordion-toggle' data-toggle='collapse' href='#Activity2Collapse'><i class='ace-icon fa fa-angle-right bigger202' data-icon-hide='ace-icon fa fa-angle-down' data-icon-show='ace-icon fa fa-angle-right' style='padding:0px 5px 0px 0px;font-size:25px;color:coral'></i></a>2</td><td> N/A </td><td><a href='.\2 Login\ActivityReport.html'>Login</a></td><td> N/A </td><td> N/A </td><td>1/19/2019 4:29:48 PM</td><td>1/19/2019 4:29:51 PM</td><td>00:00:02 </td><td><label class='StatusPassed'>Passed</label></td><td>3</td><td>100 %</td></tr><tr id='Activity2Collapse' class='collapse'><td colspan='10' style='padding-left:40px'><table class='table table-striped table-bordered table-hover'><thead class='table-space'><tr><td>Execution Sequence</td><td>Description</td><td>Run Description</td><td>Action Type</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed (Seconds)</td><td>Current Retry Iteration</td><td>Execution Status</td><td>Error Details</td><td>Extra Details</td><td>Screenshot</td></tr></thead><tr><td>1</td><td><a href='.\2 Login\1 Enter value in UserName\ActionReport.html'>Enter value in UserName</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:29:48 PM</td><td>1/19/2019 4:29:48 PM</td><td>0.643</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:29:49 AM - </td><td align='center'><img style='display:block;' src='.\2 Login\1 Enter value in UserName\Screenshots\ScreenShot_1_1.png' alt='Enter value in UserName - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in UserName1_1' onclick='show_modal("ScreenShot_Enter value in UserName1_1")'></img></td></tr><tr><td>2</td><td><a href='.\2 Login\2 Enter value in Password\ActionReport.html'>Enter value in Password</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:29:49 PM</td><td>1/19/2019 4:29:49 PM</td><td>0.606</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:29:49 AM - </td><td align='center'><img style='display:block;' src='.\2 Login\2 Enter value in Password\Screenshots\ScreenShot_2_1.png' alt='Enter value in Password - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in Password2_1' onclick='show_modal("ScreenShot_Enter value in Password2_1")'></img></td></tr><tr><td>3</td><td><a href='.\2 Login\3 Submit Page - login\ActionReport.html'>Submit Page - login</a></td><td> N/A </td><td>Submit</td><td>1/19/2019 4:29:50 PM</td><td>1/19/2019 4:29:50 PM</td><td>1.252</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:29:51 AM - </td><td align='center'><img style='display:block;' src='.\2 Login\3 Submit Page - login\Screenshots\ScreenShot_3_1.png' alt='Submit Page - login - Action - Screenshot' width='250' height='136' id='ScreenShot_Submit Page - login3_1' onclick='show_modal("ScreenShot_Submit Page - login3_1")'></img></td></tr></table></td></tr><tr><td><a class='accordion-toggle' data-toggle='collapse' href='#Activity3Collapse'><i class='ace-icon fa fa-angle-right bigger202' data-icon-hide='ace-icon fa fa-angle-down' data-icon-show='ace-icon fa fa-angle-right' style='padding:0px 5px 0px 0px;font-size:25px;color:coral'></i></a>3</td><td> N/A </td><td><a href='.\3 Select Customer Management\ActivityReport.html'>Select Customer Management</a></td><td> N/A </td><td> N/A </td><td>1/19/2019 4:29:51 PM</td><td>1/19/2019 4:30:04 PM</td><td>00:00:12 </td><td><label class='StatusPassed'>Passed</label></td><td>1</td><td>100 %</td></tr><tr id='Activity3Collapse' class='collapse'><td colspan='10' style='padding-left:40px'><table class='table table-striped table-bordered table-hover'><thead class='table-space'><tr><td>Execution Sequence</td><td>Description</td><td>Run Description</td><td>Action Type</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed (Seconds)</td><td>Current Retry Iteration</td><td>Execution Status</td><td>Error Details</td><td>Extra Details</td><td>Screenshot</td></tr></thead><tr><td>1</td><td><a href='.\3 Select Customer Management\1 Click Link Manage Customer\ActionReport.html'>Click Link: Manage Customer</a></td><td> N/A </td><td>Link: Click</td><td>1/19/2019 4:29:51 PM</td><td>1/19/2019 4:29:51 PM</td><td>12.348</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:03 AM - </td><td align='center'><img style='display:block;' src='.\3 Select Customer Management\1 Click Link Manage Customer\Screenshots\ScreenShot_1_1.png' alt='Click Link: Manage Customer - Action - Screenshot' width='250' height='136' id='ScreenShot_Click Link Manage Customer1_1' onclick='show_modal("ScreenShot_Click Link Manage Customer1_1")'></img></td></tr></table></td></tr><tr><td><a class='accordion-toggle' data-toggle='collapse' href='#Activity4Collapse'><i class='ace-icon fa fa-angle-right bigger202' data-icon-hide='ace-icon fa fa-angle-down' data-icon-show='ace-icon fa fa-angle-right' style='padding:0px 5px 0px 0px;font-size:25px;color:coral'></i></a>4</td><td> N/A </td><td><a href='.\4 Create new customer\ActivityReport.html'>Create new customer</a></td><td> N/A </td><td> N/A </td><td>1/19/2019 4:30:04 PM</td><td>1/19/2019 4:30:11 PM</td><td>00:00:06 </td><td><label class='StatusPassed'>Passed</label></td><td>6</td><td>100 %</td></tr><tr id='Activity4Collapse' class='collapse'><td colspan='10' style='padding-left:40px'><table class='table table-striped table-bordered table-hover'><thead class='table-space'><tr><td>Execution Sequence</td><td>Description</td><td>Run Description</td><td>Action Type</td><td>Execution Start Time</td><td>Execution End Time</td><td>Elapsed (Seconds)</td><td>Current Retry Iteration</td><td>Execution Status</td><td>Error Details</td><td>Extra Details</td><td>Screenshot</td></tr></thead><tr><td>1</td><td><a href='.\4 Create new customer\1 Click Link Create New\ActionReport.html'>Click Link: Create New</a></td><td> N/A </td><td>Link: Click</td><td>1/19/2019 4:30:04 PM</td><td>1/19/2019 4:30:04 PM</td><td>1.554</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:05 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\1 Click Link Create New\Screenshots\ScreenShot_1_1.png' alt='Click Link: Create New - Action - Screenshot' width='250' height='136' id='ScreenShot_Click Link Create New1_1' onclick='show_modal("ScreenShot_Click Link Create New1_1")'></img></td></tr><tr><td>2</td><td><a href='.\4 Create new customer\2 Enter value in FirstName\ActionReport.html'>Enter value in FirstName</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:30:05 PM</td><td>1/19/2019 4:30:05 PM</td><td>0.615</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:06 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\2 Enter value in FirstName\Screenshots\ScreenShot_2_1.png' alt='Enter value in FirstName - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in FirstName2_1' onclick='show_modal("ScreenShot_Enter value in FirstName2_1")'></img></td></tr><tr><td>3</td><td><a href='.\4 Create new customer\3 Enter value in LastName\ActionReport.html'>Enter value in LastName</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:30:06 PM</td><td>1/19/2019 4:30:06 PM</td><td>0.616</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:06 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\3 Enter value in LastName\Screenshots\ScreenShot_3_1.png' alt='Enter value in LastName - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in LastName3_1' onclick='show_modal("ScreenShot_Enter value in LastName3_1")'></img></td></tr><tr><td>4</td><td><a href='.\4 Create new customer\4 Enter value in HomeAddress\ActionReport.html'>Enter value in HomeAddress</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:30:07 PM</td><td>1/19/2019 4:30:07 PM</td><td>0.605</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:07 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\4 Enter value in HomeAddress\Screenshots\ScreenShot_4_1.png' alt='Enter value in HomeAddress - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in HomeAddress4_1' onclick='show_modal("ScreenShot_Enter value in HomeAddress4_1")'></img></td></tr><tr><td>5</td><td><a href='.\4 Create new customer\5 Enter value in EmailAddress\ActionReport.html'>Enter value in EmailAddress</a></td><td> N/A </td><td>TextBox:SetValueFast</td><td>1/19/2019 4:30:07 PM</td><td>1/19/2019 4:30:07 PM</td><td>0.6</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:08 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\5 Enter value in EmailAddress\Screenshots\ScreenShot_5_1.png' alt='Enter value in EmailAddress - Action - Screenshot' width='250' height='136' id='ScreenShot_Enter value in EmailAddress5_1' onclick='show_modal("ScreenShot_Enter value in EmailAddress5_1")'></img></td></tr><tr><td>6</td><td><a href='.\4 Create new customer\6 Submit Page\ActionReport.html'>Submit Page - </a></td><td> N/A </td><td>Submit</td><td>1/19/2019 4:30:08 PM</td><td>1/19/2019 4:30:08 PM</td><td>2.595</td><td>0</td><td><label class='StatusPassed'>Passed</label></td><td></td><td>1/19/2019 8:30:10 AM - </td><td align='center'><img style='display:block;' src='.\4 Create new customer\6 Submit Page\Screenshots\ScreenShot_6_1.png' alt='Submit Page -  - Action - Screenshot' width='250' height='136' id='ScreenShot_Submit Page6_1' onclick='show_modal("ScreenShot_Submit Page6_1")'></img></td></tr></table></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>                                       
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>  
+                    <!--ActivitiesDetails_End-->
+
+                    <div class="alert alert-info" style="margin-top:10px">Created By Ginger Version : 0.0.0.0.0 | Used Report Template : 'DefaultTemplate' | Report Creation Time : 2/12/2019 2:42:07 PM</div>                  
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer-inner">                  
+                    <div class="footer-content">
+                    </div>
+                </div>
+            </div>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
+        </div>       
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="current_image_in_modal">
+            <div id="caption">sdafasd asdfasdf</div>
+        </div>
+
+        <script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    function show_modal(image_id) {
+        var img = document.getElementById(image_id);
+        var modalImg = document.getElementById("current_image_in_modal");
+        var captionText = document.getElementById("caption");
+
+        modal.style.display = "block";
+        modalImg.src = img.src;
+        captionText.innerHTML = img.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }   
+        </script>
+
+    </div>
+</body>
+</html>
