@@ -1,10 +1,10 @@
 <h1>Services Grid</h1>
 
-<p>List all Ginger services connected to Ginger sevices grid</p>
+<p>List all Ginger services connected to Ginger sevrices grid</p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!servicess"><em>Loading...</em></p>
 
-<table class='table' *ngIf="forecasts">
+<table class='table' *ngIf="services">
   <thead>
     <tr>
       <th>Name</th>
@@ -18,15 +18,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.name }}</td>
-      <td>{{ forecast.serviceId }}</td>
-      <td>{{ forecast.sessionId }}</td>
-      <td>{{ forecast.host }}</td>
-      <td>{{ forecast.ip }}</td>
-      <td>{{ forecast.os }}</td>
-      <td>{{ forecast.status }}</td>
-      <td>{{ forecast.actionCount }}</td>
+    <tr *ngFor="let service of servicess">
+      <td>{{ service.name }}</td>
+      <td>{{ service.serviceId }}</td>
+      <td>{{ service.sessionId }}</td>
+      <td>{{ service.host }}</td>
+      <td>{{ service.ip }}</td>
+      <td>{{ service.os }}</td>
+      <td>{{ service.status }}</td>
+      <td>{{ service.actionCount }}</td>
     </tr>
   </tbody>
 </table>
