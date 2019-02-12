@@ -7,13 +7,16 @@ using GingerTestHelper;
 using System.Globalization;
 using Ginger.Reports.GingerExecutionReport;
 using System.IO;
+using System.Xml;
+using Amdocs.Ginger.Common;
 
 namespace Ginger.Reports.Tests
 {
     [TestClass]
     public class ReportsTest
     {
-        [TestMethod]  [Timeout(60000)]
+        [TestMethod]
+        [Timeout(60000)]
         public void ActivityReportTest()
         {
 
@@ -33,7 +36,8 @@ namespace Ginger.Reports.Tests
             }
         }
 
-        [TestMethod]  [Timeout(60000)]
+        [TestMethod]
+        [Timeout(60000)]
         public void BusinessflowReportTest()
         {
             //Arrange
@@ -52,24 +56,74 @@ namespace Ginger.Reports.Tests
             }
         }
 
+        static string mOutputFolderPath;
+        static string mTestResourcesPath;
 
-        [TestMethod]
-        //[Timeout(60000)]
-        public void GenrateLastExecutionHTMLReportTest()
+        [ClassInitialize]
+        public static void ClassInit(TestContext testContext)
         {
             //Arrange
-            string BusinessFlowReportFolder = GingerTestHelper.TestResources.GetTestResourcesFolder(@"Reports" + Path.DirectorySeparatorChar + "AutomationTab_LastExecution"+ Path.DirectorySeparatorChar);
+            string BusinessFlowReportFolder = GingerTestHelper.TestResources.GetTestResourcesFolder(@"Reports" + Path.DirectorySeparatorChar + "AutomationTab_LastExecution" + Path.DirectorySeparatorChar);
             ReportInfo RI = new ReportInfo(BusinessFlowReportFolder);
-            string templatesFolder = (ExtensionMethods.getGingerEXEFileName() + @"Reports"+ Path.DirectorySeparatorChar  + "GingerExecutionReport" + Path.DirectorySeparatorChar).Replace("Ginger.exe", "");
+            string templatesFolder = (ExtensionMethods.getGingerEXEFileName() + @"Reports" + Path.DirectorySeparatorChar + "GingerExecutionReport" + Path.DirectorySeparatorChar).Replace("Ginger.exe", "");
             HTMLReportConfiguration selectedHTMLReportConfiguration = HTMLReportConfiguration.SetHTMLReportConfigurationWithDefaultValues("DefaultTemplate", true);
             string hTMLOutputFolder = TestResources.GetTempFolder("HTMLReports");
 
-
+            mOutputFolderPath = TestResources.GetTempFolder("HTMLReports") + Path.DirectorySeparatorChar;
+            mTestResourcesPath = GingerTestHelper.TestResources.GetTestResourcesFolder(@"Reports" + Path.DirectorySeparatorChar + "HTMLReports" + Path.DirectorySeparatorChar);
             //Act
-            string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, selectedHTMLReportConfiguration, templatesFolder, hTMLOutputFolder );
+            string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, selectedHTMLReportConfiguration, templatesFolder, hTMLOutputFolder);
 
+        }
+
+
+
+        [TestMethod]
+        public void GenrateLastExecutionHTMLBusinessFlowReportTest()
+        {
             //Assert
+            string ExecutionFile = GetReportWithoutCrteationDate(mOutputFolderPath + "BusinessFlowReport.html");
+            string TestResourcesFIle = GetReportWithoutCrteationDate(mTestResourcesPath + "BusinessFlowReport.html");
 
+            Assert.AreEqual(ExecutionFile, TestResourcesFIle);
+        }
+
+        [TestMethod]
+        public void GenrateLastExecutionHTMLActivityReportTest()
+        {
+            //Assert
+            string ActivityReportFullPath = "1 Goto SCM URL" + Path.DirectorySeparatorChar + "ActivityReport.html";
+            string ExecutionFile = GetReportWithoutCrteationDate(mOutputFolderPath + Path.DirectorySeparatorChar + ActivityReportFullPath);
+            string TestResourcesFIle = GetReportWithoutCrteationDate(mTestResourcesPath + Path.DirectorySeparatorChar + ActivityReportFullPath);
+
+            Assert.AreEqual(ExecutionFile, TestResourcesFIle);
+        }
+
+        [TestMethod]
+        public void GenrateLastExecutionHTMLActionReportTest()
+        {
+            //Assert
+            string ActivityReportFullPath = "1 Goto SCM URL" + Path.DirectorySeparatorChar + "1 Goto App URL - httpcmitechin" + Path.DirectorySeparatorChar + "ActionReport.html";
+            string ExecutionFile = GetReportWithoutCrteationDate(mOutputFolderPath + Path.DirectorySeparatorChar + ActivityReportFullPath);
+            string TestResourcesFIle = GetReportWithoutCrteationDate(mTestResourcesPath + Path.DirectorySeparatorChar + ActivityReportFullPath);
+
+            Assert.AreEqual(ExecutionFile, TestResourcesFIle);
+        }
+
+
+        private string GetReportWithoutCrteationDate(string filePath)
+        {
+            string ExecutionFile = File.ReadAllText(filePath);
+            return RemoveReportCreationDate(ExecutionFile);
+        }
+
+
+        private string RemoveReportCreationDate(string FileContent)
+        {
+            int creationDatePosition = FileContent.IndexOf("Report Creation Time");
+            int EndOfLineOfCreationDatePosition = FileContent.IndexOf(Environment.NewLine, creationDatePosition);
+            string NewFileContent = FileContent.Substring(0, creationDatePosition) + FileContent.Substring(EndOfLineOfCreationDatePosition);
+            return NewFileContent;
         }
 
     }

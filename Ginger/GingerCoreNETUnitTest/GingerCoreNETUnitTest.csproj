@@ -203,6 +203,15 @@
     <None Update="TestResources\Reports\FailedAction.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestResources\Reports\HTMLReports\1 Goto SCM URL\1 Goto App URL - httpcmitechin\ActionReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestResources\Reports\HTMLReports\1 Goto SCM URL\ActivityReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestResources\Reports\HTMLReports\BusinessFlowReport.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestResources\Reports\PassedAction.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
