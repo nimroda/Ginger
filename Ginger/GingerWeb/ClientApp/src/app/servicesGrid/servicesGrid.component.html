@@ -2,7 +2,7 @@
 
 <p>List all Ginger services connected to Ginger sevrices grid</p>
 
-<p *ngIf="!servicess"><em>Loading...</em></p>
+<p *ngIf="!services"><em>Loading...</em></p>
 
 <table class='table' *ngIf="services">
   <thead>
@@ -18,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let service of servicess">
+    <tr *ngFor="let service of services">
       <td>{{ service.name }}</td>
       <td>{{ service.serviceId }}</td>
       <td>{{ service.sessionId }}</td>
