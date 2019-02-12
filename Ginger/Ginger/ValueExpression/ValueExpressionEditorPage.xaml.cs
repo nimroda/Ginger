@@ -631,7 +631,7 @@ namespace Ginger
             mVE.Value = this.ValueUCTextEditor.textEditor.Text;
             ValueCalculatedTextBox.Text = mVE.ValueCalculated;
 
-            Tvel.SavetoJson(@"C:\Users\mohdkhan\Desktop\ValueExpressionRefrences.json");
+            //Tvel.SavetoJson(@"C:\Users\mohdkhan\Desktop\ValueExpressionRefrences.json");
         }
                 
         private void OKButton_Click(object sender, RoutedEventArgs e)
