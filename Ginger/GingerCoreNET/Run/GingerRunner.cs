@@ -25,7 +25,6 @@ using Amdocs.Ginger.Common.Repository;
 using Amdocs.Ginger.Common.Repository.TargetLib;
 using Amdocs.Ginger.Common.UIElement;
 using Amdocs.Ginger.CoreNET.Execution;
-using Amdocs.Ginger.CoreNET.Run.RunListenerLib;
 using Amdocs.Ginger.Repository;
 using Amdocs.Ginger.Run;
 using GingerCore;
@@ -2646,15 +2645,14 @@ namespace Ginger.Run
         //used for Model param - GingerCore.Actions.WebServices.WebAPI.ActWebAPIModel
         private void CalculateModelParameterExpectedValue(Act act, ActReturnValue ARC)
         {
-            act.CalculateModelParameterExpectedValue(ARC);
-
-            
+            act.CalculateModelParameterExpectedValue(ARC);            
         }
 
         public static void CalculateARCStatus(ActReturnValue ARC,Act act=null)
         {
             string PassValue=String.Empty;
             string FailValue=String.Empty;
+
             if (ARC.Operator == eOperator.Legacy)
             {
                 CalculateARCStatusLegacy(ARC);
@@ -2663,17 +2661,14 @@ namespace Ginger.Run
             {
                 bool? status=null;
 
-
                 string Expression = string.Empty;
 
                 switch (ARC.Operator)
                 {
-
                     case eOperator.Contains:
                         status = ARC.Actual.Contains(ARC.ExpectedCalculated);
                         PassValue = ARC.Actual + " Contains " + ARC.ExpectedCalculated;
                         FailValue = ARC.Actual+ " Does not Contains " + ARC.ExpectedCalculated;
-
                         break;
                     case eOperator.DoesNotContains:
                         status = ARC.Actual.Contains(ARC.ExpectedCalculated);
@@ -2715,39 +2710,38 @@ namespace Ginger.Run
                         FailValue = ARC.Actual + " Equals " + ARC.ExpectedCalculated;
                         PassValue = ARC.Actual + " Does not Equals " + ARC.ExpectedCalculated;
                         break;
-
                 }
                 if (status==null)
                 {
-
-                    status = CodeProcessor.EvalCondition(Expression);
-                   
-                }
-
-
-                if (status.Value)
-                {
-                    ARC.Status = ActReturnValue.eStatus.Passed;
-
+                    status = CodeProcessor.EvalCondition(Expression);                   
                 }
                 else
                 {
-                    ARC.Status = ActReturnValue.eStatus.Failed;
-                    if (act != null)
+                    if (status.Value)
                     {
-                        act.Error += FailValue + System.Environment.NewLine; ;
+                        ARC.Status = ActReturnValue.eStatus.Passed;
 
+                    }
+                    else
+                    {
+                        ARC.Status = ActReturnValue.eStatus.Failed;
+                        if (act != null)
+                        {
+                            act.Error += FailValue + System.Environment.NewLine; ;
+
+                        }
                     }
                 }
                 
             }
         }
-            public static void CalculateARCStatusLegacy(ActReturnValue ARC)
+
+        public static void CalculateARCStatusLegacy(ActReturnValue ARC)
         {
             //TODO: Check Expected null or empty return with no change
             
             //check basic compare - most cases
-            if (ARC.ExpectedCalculated == ARC.Actual)
+            if (ARC.ExpectedCalculated.Equals(ARC.Actual))
             {
                 ARC.Status = ActReturnValue.eStatus.Passed;
                 return;
@@ -2831,7 +2825,7 @@ namespace Ginger.Run
                 rc = VBS.ExecuteVBSEval(ARC.ExpectedCalculated);
             }
 
-            if (rc == "-1")
+            if (rc.Equals("-1"))
             {
                 ARC.ExpectedCalculated = "'" + ARC.ExpectedCalculated + "' is True";
                 return true;
@@ -2855,8 +2849,7 @@ namespace Ginger.Run
 
         
         public void RunActivity(Activity activity, bool doContinueRun = false)
-        {
-            
+        {            
             bool statusCalculationIsDone = false;
 
             //check if Activity is allowed to run
@@ -2908,7 +2901,6 @@ namespace Ginger.Run
 
                 ContinueTimerVariables(CurrentBusinessFlow.CurrentActivity.Variables);
             }
-
             
 
             //Do not disable the following two lines. these helping the FC run proper activities
@@ -3111,6 +3103,7 @@ namespace Ginger.Run
                 }
             }
         }
+
         private void PostScopeVariableHandling(ObservableList<VariableBase> variableList)  
         {
             if (variableList == null || variableList.Count == 0)
@@ -3133,11 +3126,10 @@ namespace Ginger.Run
 
         private void CurrentBusinessFlow_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentActivity")
+            if (e.PropertyName.Equals("CurrentActivity"))
             {
                 mCurrentActivityChanged = true;
             }
-
         }
 
         private bool IsLastActionOfActivity()
@@ -3161,6 +3153,7 @@ namespace Ginger.Run
             });
             return result;
         }
+
         public void ResetStatus(eContinueLevel continueLevel, eResetStatus resetFrom, BusinessFlow specificBusinessFlow = null, Activity specificActivity = null, Act specificAction = null)
         {
             ResetRunStatus(continueLevel, resetFrom, specificBusinessFlow, specificActivity, specificAction);
