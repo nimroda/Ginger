@@ -30,10 +30,8 @@ namespace GingerWeb.Controllers
                 
             string[] solutionFolders = Directory.GetDirectories(solutionsFolder);            
             foreach(string solution in solutionFolders)
-            {
-                //string txt = System.IO.File.ReadAllText(solution);
-                //Ginger.SolutionGeneral.Solution sol = (Ginger.SolutionGeneral.Solution)NewRepositorySerializer.DeserializeFromText(txt);
-                //solutions.Add(new SolutionJSON() { name = sol.Name, path = "solution" });                
+            {                
+                
                 string solutionName = solution.Replace(Path.GetDirectoryName(solution) + "\\","");
                 solutions.Add(new SolutionJSON() { name = solutionName, path = solution });
             }
@@ -58,7 +56,13 @@ namespace GingerWeb.Controllers
                 SolutionRepository SR = GingerSolutionRepository.CreateGingerSolutionRepository();                
                 SR.Open(sFolder);
                 WorkSpace.Instance.SolutionRepository = SR;
-                //WorkSpace.Instance.Solution = (Solution)(ISolution)SR.RepositorySerializer.DeserializeFromFile(Path.Combine(SR.SolutionFolder, "Ginger.Solution.xml"));
+
+                //string txt = System.IO.File.ReadAllText(solution);
+                //Ginger.SolutionGeneral.Solution sol = (Ginger.SolutionGeneral.Solution)NewRepositorySerializer.DeserializeFromText(txt);
+                //WorkSpace.Instance.Solution = sol;
+
+
+                WorkSpace.Instance.Solution = (Solution)(ISolution)SR.RepositorySerializer.DeserializeFromFile(Path.Combine(SR.SolutionFolder, "Ginger.Solution.xml"));
             }
             else
             {
