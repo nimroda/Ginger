@@ -43,7 +43,7 @@ export class BusinessFlowsComponent
       },
         err => {
           console.log("Error occured");
-          BF.status = "Error 123";
+          BF.status = "Exception while run flow";
         }
       );
   }

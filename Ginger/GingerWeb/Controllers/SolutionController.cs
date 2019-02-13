@@ -23,21 +23,10 @@ namespace GingerWeb.Controllers
 
             // Scan all folder which contains Ginger.Solution.xml
             // string solutionsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ginger" , "Solutions" );            
-            string solutionsFolder;
+            
 
-            //TODO: add Mac
-            if (GingerUtils.OperatingSystem.IsWindows())
-            {
-                solutionsFolder = @"c:\Ginger\Solutions";
-            }
-            else if (GingerUtils.OperatingSystem.IsLinux())
-            {
-                solutionsFolder = @"~/Ginger/Solutions";
-            }
-            else
-            {
-                throw new Exception("Unknown OS, cannot set default folder");
-            }
+            string solutionsFolder = General.GetLocalGingerDirectory("Solutions");
+                
                 
             string[] solutionFolders = Directory.GetDirectories(solutionsFolder);            
             foreach(string solution in solutionFolders)

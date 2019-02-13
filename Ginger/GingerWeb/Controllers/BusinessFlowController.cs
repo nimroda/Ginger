@@ -4,6 +4,7 @@ using Ginger.Run;
 using GingerCore;
 using GingerCore.Actions;
 using GingerCore.Environments;
+using GingerWeb.UsersLib;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -81,25 +82,26 @@ namespace GingerWeb.Controllers
         }
 
 
-        string jsonDumpFolder = @"c:\temp\Ginger\Dump\";  // !!!!!!!!!!!!!!!!!!!temp FIXME
+        string jsonDumpFolder = General.GetLocalGingerDirectory("Dump") + Path.DirectorySeparatorChar;
         
 
         void GenerateReport(BusinessFlow businessFlow)    // temp remove BF from param
         {
 
             string BusinessFlowReportFolder = jsonDumpFolder + "1 " + businessFlow.GetNameForFileName();   // !!!!!!!!!!!!!!!! temp remove
-            ReportInfo RI = new ReportInfo(BusinessFlowReportFolder);
-            //Ginger.Reports.GingerExecutionReport.ExtensionMethods.CreateGingerExecutionReport(RI);
+            ReportInfo RI = new ReportInfo(BusinessFlowReportFolder);            
 
-            string templatesFolder = @"C:\Users\yaronwe\source\repos\Ginger\Ginger\Ginger\Reports\GingerExecutionReport\"; // !!!!!!!!!!!!!!!!!!!!!!! temp fix me
-            
+            string templatesFolder = General.GetLocalGingerDirectory("HTMLReportTemplate");
 
-            string hTMLOutputFolder = @"C:\Temp\Ginger\Report"; // !!!!!!!!!!!!!!!!!!!!!!! temp fix me
-            Directory.Delete(hTMLOutputFolder,true);
-            Directory.CreateDirectory(hTMLOutputFolder);
-            
+            string hTMLOutputFolder = General.GetLocalGingerDirectory("Report"); 
 
-            //HTMLReportConfiguration config = new HTMLReportConfiguration();
+
+            if (Directory.Exists(hTMLOutputFolder))
+            {
+                Directory.Delete(hTMLOutputFolder, true);
+            }
+            Directory.CreateDirectory(hTMLOutputFolder);                        
+
             HTMLReportConfiguration config = HTMLReportConfiguration.SetHTMLReportConfigurationWithDefaultValues("DefaultTemplate", true);
             string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, config, templatesFolder, hTMLOutputFolder);
 

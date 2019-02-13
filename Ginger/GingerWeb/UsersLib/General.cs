@@ -3,15 +3,15 @@ using Amdocs.Ginger.Common;
 using Amdocs.Ginger.GingerConsole;
 using Amdocs.Ginger.GingerConsole.ReporterLib;
 using Amdocs.Ginger.Repository;
-using Ginger.SolutionGeneral;
 using GingerCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GingerWeb.UsersLib
 {
 
-    
+
     public class General
     {
         
@@ -92,6 +92,37 @@ namespace GingerWeb.UsersLib
             NewRepositorySerializer.AddClasses(list);
 
         }
+
+
+        public static string GetLocalGingerDirectory(string subfolder = null)
+        {
+
+            string localFolder;
+            if (GingerUtils.OperatingSystem.IsWindows())
+            {
+                //envHome = "HOMEPATH";
+                //gingerHome = @"C:\GingerSourceControl";
+                localFolder = @"c:\Ginger";
+            }
+            else if (GingerUtils.OperatingSystem.IsLinux())
+            {                
+                string homePath = Environment.GetEnvironmentVariable("HOME");
+                localFolder = System.IO.Path.Combine(homePath, "Ginger");
+            }
+            else
+            {
+                throw new Exception("Unknown OS for get ginger Home");
+            }
+            if (!string.IsNullOrEmpty(subfolder))
+            {
+                localFolder = Path.Combine(localFolder, subfolder);
+            }
+            return localFolder;
+
+
+
+        }
+
 
 
     }
