@@ -2586,9 +2586,9 @@ namespace Ginger.Run
                     CalculateModelParameterExpectedValue(act, actReturnValue);
 
                     //compare Actual vs Expected (calculated)
-                    CalculateARCStatus(actReturnValue);
+                    CalculateARCStatus(actReturnValue,act);
 
-                    if (actReturnValue.Status == ActReturnValue.eStatus.Failed)
+                    if (actReturnValue.Status == ActReturnValue.eStatus.Failed && actReturnValue.Operator==eOperator.Legacy)
                     {
                         string formatedExpectedCalculated = actReturnValue.ExpectedCalculated;
                         if (actReturnValue.ExpectedCalculated.Length >= 9 && (actReturnValue.ExpectedCalculated.Substring(actReturnValue.ExpectedCalculated.Length - 9, 9)).Contains("is False"))
@@ -2651,9 +2651,10 @@ namespace Ginger.Run
             
         }
 
-        public static void CalculateARCStatus(ActReturnValue ARC)
+        public static void CalculateARCStatus(ActReturnValue ARC,Act act)
         {
-
+            string PassValue=String.Empty;
+            string FailValue=String.Empty;
             if (ARC.Operator == eOperator.Legacy)
             {
                 CalculateARCStatusLegacy(ARC);
@@ -2670,31 +2671,49 @@ namespace Ginger.Run
 
                     case eOperator.Contains:
                         status = ARC.Actual.Contains(ARC.ExpectedCalculated);
+                        PassValue = ARC.Actual + " Contains " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual+ " Does not Contains " + ARC.ExpectedCalculated;
+
                         break;
                     case eOperator.DoesNotContains:
                         status = ARC.Actual.Contains(ARC.ExpectedCalculated);
+                        FailValue = ARC.Actual + " Contains " + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " Does not  Contains " + ARC.ExpectedCalculated;
                         break;
                     case eOperator.Equals:
                         status = string.Equals(ARC.Actual,ARC.ExpectedCalculated);
+                        PassValue = ARC.Actual + " Equals " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual + " Does not Equals " + ARC.ExpectedCalculated;
                         break;
                     case eOperator.Evaluate:
                         Expression = ARC.ExpectedCalculated;
+                        PassValue = ARC.ExpectedCalculated +" resulted in true";
+                        FailValue = ARC.ExpectedCalculated + " resulted in false";
                         break;
                     case eOperator.GreaterThan:
                         Expression = ARC.Actual + ">" + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " Greater Than " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual + " is not Greater Than" + ARC.ExpectedCalculated;
                         break;
                     case eOperator.GreaterThanEquals:
                         Expression = ARC.Actual + ">=" + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " Greater Than Equal " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual + " is not Greater Than Equal " + ARC.ExpectedCalculated;
                         break;
                     case eOperator.LessThan:
                         Expression = ARC.Actual + "<" + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " less Than " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual + " is not less Than" + ARC.ExpectedCalculated;
                         break;
                     case eOperator.LessThanEquals:
                         Expression = ARC.Actual + "<=" + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " less Than " + ARC.ExpectedCalculated;
+                        FailValue = ARC.Actual + "is not less Than Equal" + ARC.ExpectedCalculated;
                         break;
                     case eOperator.NotEquals:
-                        Expression = ARC.Actual + "!=" + ARC.ExpectedCalculated;
-
+                        status = !string.Equals(ARC.Actual, ARC.ExpectedCalculated);
+                        FailValue = ARC.Actual + " Equals " + ARC.ExpectedCalculated;
+                        PassValue = ARC.Actual + " Does not Equals " + ARC.ExpectedCalculated;
                         break;
 
                 }
@@ -2702,17 +2721,20 @@ namespace Ginger.Run
                 {
 
                     status = CodeProcessor.EvalCondition(Expression);
+                   
                 }
 
 
-                    if (status.Value)
-                    {
-                        ARC.Status = ActReturnValue.eStatus.Passed;
-                    }
-                    else
-                    {
-                        ARC.Status = ActReturnValue.eStatus.Failed;
-                    }
+                if (status.Value)
+                {
+                    ARC.Status = ActReturnValue.eStatus.Passed;
+
+                }
+                else
+                {
+                    ARC.Status = ActReturnValue.eStatus.Failed;
+                    act.Error += FailValue+ System.Environment.NewLine; ;
+                }
                 
             }
         }
