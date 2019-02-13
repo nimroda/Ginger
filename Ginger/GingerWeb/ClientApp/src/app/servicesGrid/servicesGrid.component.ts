@@ -10,19 +10,16 @@ import { HttpClient } from '@angular/common/http';
 
 export class ServicesGridComponent
 {
-  public forecasts: WeatherForecast[];
-  public report: string;
-  mHttp: HttpClient;
+  public services: Service[];
   mBaseUrl: string;
 
   
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string)
-  {
-    this.mHttp = http;
+  {    
     this.mBaseUrl = baseUrl;
 
-    http.get<WeatherForecast[]>(baseUrl + 'api/ServiceGrid/NodeList').subscribe(result => {
-      this.forecasts = result;
+    http.get<Service[]>(baseUrl + 'api/ServiceGrid/NodeList').subscribe(result => {
+      this.services = result;
     }, error => console.error(error));
 
   }
@@ -31,7 +28,7 @@ export class ServicesGridComponent
 }
 
 
-interface WeatherForecast {
+interface Service {
   name: string;
   description: string;
   fileName: string;

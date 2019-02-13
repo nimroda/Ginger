@@ -10,8 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class RunSetComponent
 {
-  public runsets: RunSet[];
-  public report: string;
+  public runsets: RunSet[];  
   mHttp: HttpClient;
   mBaseUrl: string;
 
@@ -27,29 +26,25 @@ export class RunSetComponent
 
   }
 
-  public run(BF:RunSet) {
+  public run(runset:RunSet) {
 
-    BF.status = "Running";
-    BF.elapsed = -1;
-    const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/RunSet/RunRunSet', {
-      name: BF.name  //TODO: We send the BF name replace with BF.Guid
+    runset.status = "Running";
+    runset.elapsed = -1;
+    const req = this.mHttp.post<RunSetResult>(this.mBaseUrl + 'api/RunSet/RunRunSet', {
+      name: runset.name  //TODO: We send the runset name replace with runset.Guid
     })
       .subscribe(
       res => {
         // Once we get the response        
-        BF.status = res.status;
-        BF.elapsed = res.elapsed;
+        runset.status = res.status;
+        runset.elapsed = res.elapsed;
         // this.report = res.report;
       },
         err => {
           console.log("Error occured");
-          BF.status = "Error !!!";
+          runset.status = "Error !!!";
         }
       );
-  }
-
-  public flowReport(BF: RunSet) {
-    
   }
 
 
@@ -58,7 +53,7 @@ export class RunSetComponent
 
 
 
-interface RunBusinessFlowResult {
+interface RunSetResult {
   status: string;
   elapsed: number;
   report: string;
