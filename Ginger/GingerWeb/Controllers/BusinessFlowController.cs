@@ -53,7 +53,10 @@ namespace GingerWeb.Controllers
         [HttpPost("[action]")]
         public RunBusinessFlowResult RunBusinessFlow([FromBody] RunBusinessFlowRequest runBusinessFlowRequest)
         {
-            Directory.Delete(jsonDumpFolder, true);
+            if (Directory.Exists(jsonDumpFolder))
+            {
+                Directory.Delete(jsonDumpFolder, true);
+            }
             Directory.CreateDirectory(jsonDumpFolder);
             RunBusinessFlowResult runBusinessFlowResult = new RunBusinessFlowResult();
 
