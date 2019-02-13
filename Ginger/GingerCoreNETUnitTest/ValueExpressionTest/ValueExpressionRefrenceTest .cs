@@ -22,6 +22,7 @@ using GingerCoreNET.RosLynLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GingerCoreNETUnitTests.ValueExpressionTest
@@ -57,9 +58,25 @@ namespace GingerCoreNETUnitTests.ValueExpressionTest
                 }
 
             }
+                              
+        }
 
 
+        [TestMethod]
+        public void TestCSEvalExhaustive()
+        {
+            string Expression = string.Empty;
 
+            string Expected = string.Empty;
+            foreach (ValueExpressionReference ver in WorkSpace.VERefrences.Refrences.Where(x => x.Expression.StartsWith(@"{CS") && x.ExpressionResult != null))
+            {
+
+                Expression = Expression + "|" + ver.Expression;
+                Expected = Expected + "|" + ver.ExpressionResult;
+            }
+            string Output = CodeProcessor.GetResult(Expression);
+
+            Assert.AreEqual(Expected, Output);
 
         }
 
