@@ -696,7 +696,7 @@ namespace UnitTests.NonUITests
 
 
         //TODO: temp ignore fix me !!!!!!!!!!!!!!!!!!
-        [Ignore]
+        [TestMethod]
         public void VBS_Split1()
         {
             //Arrange
