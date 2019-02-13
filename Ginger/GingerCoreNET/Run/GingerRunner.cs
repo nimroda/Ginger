@@ -2586,7 +2586,7 @@ namespace Ginger.Run
                     CalculateModelParameterExpectedValue(act, actReturnValue);
 
                     //compare Actual vs Expected (calculated)
-                    CalculateARCStatus(actReturnValue);
+                    CalculateARCStatus(actReturnValue,act);
 
                     if (actReturnValue.Status == ActReturnValue.eStatus.Failed && actReturnValue.Operator==eOperator.Legacy)
                     {
@@ -2651,7 +2651,7 @@ namespace Ginger.Run
             
         }
 
-        public static void CalculateARCStatus(ActReturnValue ARC)
+        public static void CalculateARCStatus(ActReturnValue ARC,Act act=null)
         {
             string PassValue=String.Empty;
             string FailValue=String.Empty;
@@ -2733,7 +2733,11 @@ namespace Ginger.Run
                 else
                 {
                     ARC.Status = ActReturnValue.eStatus.Failed;
-                    act.Error += FailValue+ System.Environment.NewLine; ;
+                    if (act != null)
+                    {
+                        act.Error += FailValue + System.Environment.NewLine; ;
+
+                    }
                 }
                 
             }
