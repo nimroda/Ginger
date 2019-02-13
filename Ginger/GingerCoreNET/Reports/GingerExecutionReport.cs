@@ -2746,9 +2746,10 @@ namespace Ginger.Reports.GingerExecutionReport
             return GingerEXEFileName;
         }
 
+
         public static string GetHTMLTemplate(string HTMLFileName, string TemplatesFolder)
         {
-            string htmlfile = TemplatesFolder + HTMLFileName;
+            string htmlfile = Path.Combine(TemplatesFolder ,HTMLFileName);
             string HTML = System.IO.File.ReadAllText(htmlfile);
             return HTML;
         }
