@@ -1,6 +1,5 @@
 ﻿using amdocs.ginger.GingerCoreNET;
 using Amdocs.Ginger.Common;
-using Amdocs.Ginger.CoreNET.Repository;
 using Amdocs.Ginger.GingerConsole;
 using Amdocs.Ginger.GingerConsole.ReporterLib;
 using Amdocs.Ginger.Repository;
@@ -8,52 +7,27 @@ using Ginger.SolutionGeneral;
 using GingerCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GingerWeb.UsersLib
 {
 
+    
     public class General
     {
-        public static SolutionRepository SR;
+        
         public static void init()
         {
             InitClassTypesDictionary();
 
-            Reporter.WorkSpaceReporter = new GingerConsoleWorkspaceReporter();
-            // NewRepositorySerializer RS = new NewRepositorySerializer();
-
+            Reporter.WorkSpaceReporter = new GingerConsoleWorkspaceReporter();            
             GingerConsoleWorkSpace ws = new GingerConsoleWorkSpace();
             WorkSpace.Init(ws);
-
-            // WorkSpace.Instance.OpenSolution(@"C:\yaron\GingerSolution\Plugins\Plugins");
-            OpenSolution(@"C:\yaron\GingerSolution\Plugins\Plugins");
-            WorkSpace.Instance.Solution = (Solution)(ISolution)SR.RepositorySerializer.DeserializeFromFile(Path.Combine(SR.SolutionFolder, "Ginger.Solution.xml"));
-
-            var gg = WorkSpace.Instance.LocalGingerGrid;
-            var nodes = gg.NodeList;
-
-            var v = WorkSpace.Instance.SolutionRepository.GetAllRepositoryItems<BusinessFlow>();            
+            
+            var servicesGrid = WorkSpace.Instance.LocalGingerGrid;
+            var nodes = servicesGrid.NodeList;            
         }
 
-
-        // Combine to one in core !!!!!!!!!!!!!!!!!!!!!
-
-        private static void OpenSolution(string sFolder)
-        {            
-            if (Directory.Exists(sFolder))
-            {
-                Console.WriteLine("Opening Solution at folder: " + sFolder);
-                SR = GingerSolutionRepository.CreateGingerSolutionRepository();
-                WorkSpace.Instance.SolutionRepository = SR;  
-                SR.Open(sFolder);
-            }
-            else
-            {
-                Console.WriteLine("Directory not found: " + sFolder);
-            }
-        }
-
+        
         // COMBINE to one for all !!!!!!!!!!!!!!
         public static void InitClassTypesDictionary()
         {
@@ -67,7 +41,7 @@ namespace GingerWeb.UsersLib
 
             // Add all RI classes from GingerCoreCommon
             NewRepositorySerializer.AddClassesFromAssembly(typeof(RepositoryItemBase).Assembly);
-            NewRepositorySerializer.AddClassesFromAssembly(typeof(Solution).Assembly);
+            NewRepositorySerializer.AddClassesFromAssembly(typeof(Ginger.SolutionGeneral.Solution).Assembly);
 
             // corenet
             // NewRepositorySerializer.AddClassesFromAssembly(typeof(Agent).Assembly);

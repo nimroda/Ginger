@@ -27,10 +27,10 @@ export class SolutionComponent
 
   }
 
-  public openSolutionFlow(BF:Solution) {
+  public openSolution(solution:Solution) {
     
-    const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/BusinessFlow/RunBusinessFlow', {
-      name: BF.name  //TODO: We send the BF name replace with BF.Guid
+    const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/Solution/OpenSolution', {
+      name: solution.path 
     })
       .subscribe(
       res => {
@@ -60,5 +60,5 @@ interface RunBusinessFlowResult {
 
 interface Solution {
   name: string;
-  folder: string;  
+  path: string;  
 }

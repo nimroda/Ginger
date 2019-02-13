@@ -43,7 +43,10 @@ namespace GingerWeb
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+
+            //TODO: FIXME to work for prod!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HTTPS redirect
+            // app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

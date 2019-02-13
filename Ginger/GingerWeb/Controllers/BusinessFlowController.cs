@@ -1,9 +1,9 @@
+using amdocs.ginger.GingerCoreNET;
 using Ginger.Reports;
 using Ginger.Run;
 using GingerCore;
 using GingerCore.Actions;
 using GingerCore.Environments;
-using GingerWeb.UsersLib;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,8 @@ namespace GingerWeb.Controllers
 {
     [Route("api/[controller]")]
     public class BusinessFlowController : Controller
-    {
-        // temp remove from here !!!!!!!!!!!
-        static bool bDone;
+    {        
+        
 
         public class RunBusinessFlowRequest
         {
@@ -35,13 +34,8 @@ namespace GingerWeb.Controllers
         [HttpGet("[action]")]
         public IEnumerable<object> BusinessFlows()
         {
-            if (!bDone)
-            {
-                General.init();
-                bDone = true;
-            }
-
-            IEnumerable<BusinessFlow> BusinessFlows = General.SR.GetAllRepositoryItems<BusinessFlow>().OrderBy(x => x.Name);
+            
+            IEnumerable<BusinessFlow> BusinessFlows = WorkSpace.Instance.SolutionRepository.GetAllRepositoryItems<BusinessFlow>().OrderBy(x => x.Name);
             var data = BusinessFlows.Select(x =>
                                     new
                                     {
@@ -68,7 +62,7 @@ namespace GingerWeb.Controllers
                 return runBusinessFlowResult;
             }
 
-            BusinessFlow BF = (from x in General.SR.GetAllRepositoryItems<BusinessFlow>() where x.Name == runBusinessFlowRequest.name select x).SingleOrDefault();
+            BusinessFlow BF = (from x in WorkSpace.Instance.SolutionRepository.GetAllRepositoryItems<BusinessFlow>() where x.Name == runBusinessFlowRequest.name select x).SingleOrDefault();
             if (BF == null)
             {
                 runBusinessFlowResult.Status = "Name cannot be null";
