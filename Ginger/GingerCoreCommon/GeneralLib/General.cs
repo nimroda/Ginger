@@ -24,6 +24,7 @@ using System.IO;
 using System.Text;
 using Amdocs.Ginger.Repository;
 using System.Linq;
+using System.Reflection;
 
 namespace Amdocs.Ginger.Common.GeneralLib
 {
@@ -236,6 +237,15 @@ namespace Amdocs.Ginger.Common.GeneralLib
             //TODO: add more chars remove - see https://blog.josephscott.org/2007/02/12/things-that-shouldnt-be-in-file-names-for-1000-alex/
 
             return fileName;
+        }
+
+
+
+
+        public static string GetExecutingDirectory()
+        {
+            string Filename = Assembly.GetExecutingAssembly().Location;
+            return Path.GetDirectoryName(Filename);
         }
     }
 }

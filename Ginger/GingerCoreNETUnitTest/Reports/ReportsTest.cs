@@ -65,14 +65,13 @@ namespace Ginger.Reports.Tests
             //Arrange
             string BusinessFlowReportFolder = GingerTestHelper.TestResources.GetTestResourcesFolder(@"Reports" + Path.DirectorySeparatorChar + "AutomationTab_LastExecution" + Path.DirectorySeparatorChar);
             ReportInfo RI = new ReportInfo(BusinessFlowReportFolder);
-            string templatesFolder = (ExtensionMethods.getGingerEXEFileName() + @"Reports" + Path.DirectorySeparatorChar + "GingerExecutionReport" + Path.DirectorySeparatorChar).Replace("Ginger.exe", "");
+            string templatesFolder = Path.Combine(Amdocs.Ginger.Common.GeneralLib.General.GetExecutingDirectory(),"Reports" , "GingerExecutionReport");
             HTMLReportConfiguration selectedHTMLReportConfiguration = HTMLReportConfiguration.SetHTMLReportConfigurationWithDefaultValues("DefaultTemplate", true);
-            string hTMLOutputFolder = TestResources.GetTempFolder("HTMLReports");
 
             mOutputFolderPath = TestResources.GetTempFolder("HTMLReports") + Path.DirectorySeparatorChar;
-            mTestResourcesPath = GingerTestHelper.TestResources.GetTestResourcesFolder(@"Reports" + Path.DirectorySeparatorChar + "HTMLReports" + Path.DirectorySeparatorChar);
+            mTestResourcesPath = TestResources.GetTestResourcesFolder( Path.Combine("Reports", "HTMLReports"));
             //Act
-            string report = Ginger.Reports.GingerExecutionReport.ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, selectedHTMLReportConfiguration, templatesFolder, hTMLOutputFolder);
+            string report = ExtensionMethods.NewFunctionCreateGingerExecutionReport(RI, selectedHTMLReportConfiguration, templatesFolder, mOutputFolderPath);
 
         }
 
@@ -83,7 +82,7 @@ namespace Ginger.Reports.Tests
         {
             //Assert
             string ExecutionFile = GetReportWithoutCrteationDate(mOutputFolderPath + "BusinessFlowReport.html");
-            string TestResourcesFIle = GetReportWithoutCrteationDate(mTestResourcesPath + "BusinessFlowReport.html");
+            string TestResourcesFIle = GetReportWithoutCrteationDate(Path.Combine(mTestResourcesPath , "BusinessFlowReport.html"));
 
             Assert.AreEqual(ExecutionFile, TestResourcesFIle);
         }

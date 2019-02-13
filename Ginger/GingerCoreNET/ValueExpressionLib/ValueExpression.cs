@@ -792,7 +792,7 @@ namespace GingerCore
                 //TODO: err
                 mValueCalculated = mValueCalculated.Replace(p, "ERROR: " + e.Message);
             }
-            if (FailonUnix && System.Environment.OSVersion.Platform.ToString().StartsWith("Win"))
+            if (FailonUnix && !Environment.OSVersion.Platform.ToString().StartsWith("Win"))
             {
 
 
