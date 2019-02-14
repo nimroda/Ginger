@@ -2671,7 +2671,7 @@ namespace Ginger.Run
                         FailValue = ARC.Actual+ " Does not Contains " + ARC.ExpectedCalculated;
                         break;
                     case eOperator.DoesNotContains:
-                        status = ARC.Actual.Contains(ARC.ExpectedCalculated);
+                        status = !ARC.Actual.Contains(ARC.ExpectedCalculated);
                         FailValue = ARC.Actual + " Contains " + ARC.ExpectedCalculated;
                         PassValue = ARC.Actual + " Does not  Contains " + ARC.ExpectedCalculated;
                         break;
@@ -2715,8 +2715,7 @@ namespace Ginger.Run
                 {
                     status = CodeProcessor.EvalCondition(Expression);                   
                 }
-                else
-                {
+               
                     if (status.Value)
                     {
                         ARC.Status = ActReturnValue.eStatus.Passed;
@@ -2731,7 +2730,7 @@ namespace Ginger.Run
 
                         }
                     }
-                }
+                
                 
             }
         }
