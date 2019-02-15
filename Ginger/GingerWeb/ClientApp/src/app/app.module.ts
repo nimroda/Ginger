@@ -12,7 +12,7 @@ import { SolutionComponent } from './solution/solution.component';
 import { BusinessFlowsComponent } from './businessflows/businessflows.component';
 import { ServicesGridComponent } from './servicesgrid/servicesgrid.component';
 import { RunSetComponent } from './runset/runset.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import { RunSetComponent } from './runset/runset.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    NgbModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

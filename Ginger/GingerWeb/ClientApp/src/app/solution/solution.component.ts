@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-solution',
   templateUrl: './solution.component.html'
@@ -24,7 +23,7 @@ export class SolutionComponent
     http.get<Solution[]>(baseUrl + 'api/Solution/Solutions').subscribe(result => {
       this.solutions = result;
     }, error => console.error(error));
-
+    
   }
 
   public openSolution(solution:Solution) {
@@ -45,6 +44,19 @@ export class SolutionComponent
         }
       );
   }
+
+  //onSort({ column, direction }: SortEvent) {
+
+  //  // resetting other headers
+  //  this.headers.forEach(header => {
+  //    if (header.sortable !== column) {
+  //      header.direction = '';
+  //    }
+  //  });
+
+  //  this.service.sortColumn = column;
+  //  this.service.sortDirection = direction;
+  //}
 
   
 

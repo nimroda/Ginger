@@ -1,23 +1,21 @@
-<h1>Solution</h1>
+<h2>Solution</h2>
 
-<p>Select solution</p>
-
+<p>select a solution to open it</p>
 <p *ngIf="!solutions"><em>Loading...</em></p>
 
 <table class='table' *ngIf="solutions">
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th>Name</th>      
-      <th>folder</th>      
-      <th>Open</th>      
+      <th>Solution Location</th>      
+      <th>Action</th>      
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let solution of solutions">
       <td>{{ solution.name }}</td>
       <td>{{ solution.path }}</td>      
-      <td><button (click)="openSolution(solution)">Open</button></td>      
-      <td></td>
+      <td><button class="btnSmall" (click)="openSolution(solution)">Open</button></td>      
     </tr>
   </tbody>
 </table>

@@ -28,7 +28,6 @@ export class BusinessFlowsComponent
   }
 
   public runFlow(BF:BusinessFlow) {
-
     BF.status = "Running";
     BF.elapsed = -1;
     const req = this.mHttp.post<RunBusinessFlowResult>(this.mBaseUrl + 'api/BusinessFlow/RunBusinessFlow', {
