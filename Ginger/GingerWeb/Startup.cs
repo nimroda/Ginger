@@ -44,7 +44,7 @@ namespace GingerWeb
             }
 
 
-            //TODO: FIXME to work for prod!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! HTTPS redirect
+            // Auto redirect to HTTPS comment to stay on HTTP 
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
